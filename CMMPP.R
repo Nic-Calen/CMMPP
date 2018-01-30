@@ -17,7 +17,7 @@ State <-  array(0, dim = c(  NumDevices , NumIterations, 2))
 ActualState <- matrix(0 , nrow = NumDevices , ncol = NumIterations)
 
 NumArrivals <- matrix(0 , nrow = NumDevices , ncol = NumIterations)
-PacketSize <- ActualState <- matrix(0 , nrow = NumDevices , ncol = NumIteration)
+PacketSize <- ActualState <- matrix(0 , nrow = NumDevices , ncol = NumIterations)
 Arrival <-  NULL
 #State <-matrix(0 , nrow = NumDevices , ncol = NumIterations)
 
@@ -203,7 +203,7 @@ off_Duration <- rep(list(0),NumDevices)
 Burst_Duration <- rep(list(0),NumDevices)
 
 
-  
+
 
 for( device2 in 1:NumDevices)
   {
@@ -227,19 +227,32 @@ for( device2 in 1:NumDevices)
         Burst_Duration[[device2]][l] <- list(c(On_Duration[[device2]][l],off_Duration[[device2]][l]))
       
       }
+
       
-          
-    }   
+    } 
+     
        
+}
+
+#Collect Data 
+Device.frame <- data.frame(DeviceNum = 1:500, On_Dur = rep(0, NumDevices), off_Dur = rep(0, NumDevices), Burst_Dur = rep(0, NumDevices))
+
+for( num in 1:length(On_Duration)){
+  
+   
+  
+  Device.frame$On_Dur[num] <- list(On_Duration[[num]])
+  Device.frame$off_Dur[num] <- list(off_Duration[[num]])
+  Device.frame$Burst_Dur[num] <- list(Burst_Duration[[num]])
+  
   }
 
-
-
- 
+#Optional Ploting  
 plot(density(InterArrivalTimes))
 par(2)
-plot(MapX,MapY, xlab = "Location X" , ylab = "Location Y" , col = "red", cex = .2 , xlim = c(0,1000), ylim = c(0,1100))
+plot(MapX,MapY, xlab = "Location X" , ylab = "Location Y" , col = "red", cex = .2 , xlim = c(0,1000), ylim = c(0,1000))
 par(new = TRUE)
-plot(regularOPX,regularOPY,xlab = "Location X" , ylab = "Location Y", col ="blue", xlim = c(0, 1000),ylim = c(0,1100))
+plot(regularOPX,regularOPY,xlab = "Location X" , ylab = "Location Y", col ="blue", xlim = c(0, 1000),ylim = c(0,1000))
 par(new = TRUE)
-plot(alarmOPX,alarmOPY,xlab = "Location X" , ylab = "Location Y", cex = 2, xlim = c(0, 1000),ylim = c(0,1100))
+plot(alarmOPX,alarmOPY,xlab = "Location X" , ylab = "Location Y", cex = 2, xlim = c(0, 1000),ylim = c(0,1000))
+
